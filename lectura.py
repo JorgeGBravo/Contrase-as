@@ -13,9 +13,6 @@ if not busqueda:
     print("Búsqueda inválida")
     exit()
 
-
-
-
 sentencia = "SELECT * FROM names WHERE serv LIKE ?;"
 cur.execute(sentencia, ["%{}%".format(busqueda)])
 row = cur.fetchone()
@@ -25,18 +22,16 @@ if ultima == None:
     print("No hay ninguna coincidencia")
     exit()
 
-print('                                      FECHA                    PASSWORD')
+print('                                        PLATAFORMA                    PASSWORD')
 print('')
 
-print('Password en uso:      ', ultima)
+print('Password en uso:                     ', ultima[:2],'          ', ultima[2:])
 print('---------------------------------------------------------------------------------------')
 
 sentencia2 = "SELECT ALL * FROM pass WHERE serv LIKE ?;"
 cur.execute(sentencia2, ["%{}%".format(busqueda)])
 encuentro = cur.fetchall()
 psd2 = encuentro
-
-
 
 if len(psd2) > 1:
     lista = list()
