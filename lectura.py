@@ -15,30 +15,36 @@ if not busqueda:
 
 
 
-#sentencia = "SELECT * FROM names WHERE serv LIKE ?;"
-#cur.execute(sentencia, ["%{}%".format(busqueda)])
-#row = cur.fetchone()
-#psd = row[2]
-#print(psd)
+
+sentencia = "SELECT * FROM names WHERE serv LIKE ?;"
+cur.execute(sentencia, ["%{}%".format(busqueda)])
+row = cur.fetchone()
+ultima = row
+
+if ultima == None:
+    print("No hay ninguna coincidencia")
+    exit()
+
+print('                                      FECHA                    PASSWORD')
+print('')
+
+print('Password en uso:      ', ultima)
+print('---------------------------------------------------------------------------------------')
 
 sentencia2 = "SELECT ALL * FROM pass WHERE serv LIKE ?;"
 cur.execute(sentencia2, ["%{}%".format(busqueda)])
-row2 = cur.fetchall()
-psd2 = row2
-
-lista = list()
-
-for psd in psd2:
-    lista.append(psd)
-if len(lista) == 1:
-    ultima = max(lista)
-    orden = lista.sort()
-    borult = lista.pop()
-    penultima = None
+encuentro = cur.fetchall()
+psd2 = encuentro
 
 
-    print('                                      FECHA                    PASSWORD')
-    print('')
-    print('Contraseña en uso:    ', ultima)
-    print('---------------------------------------------------------------------------------------')
-    print('Penultima contraseña: ', penultima)
+
+if len(psd2) > 1:
+    lista = list()
+    for psd in psd2:
+        lista.append(psd)
+    lista.sort()
+    penultima = lista[len(lista)-2]
+
+    print('Penultima contraseña: ' , penultima)
+
+else: print('                      Solo hay un Password en uso editada')

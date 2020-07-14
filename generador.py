@@ -5,6 +5,26 @@ import datetime
 import random
 import string
 
+
+def gen(ord):
+    longitud = 18
+
+    valores = string.ascii_letters + string.digits + ord
+    cryptogen = SystemRandom()
+    pss = ""
+
+    while longitud > 0:
+        pss = pss + cryptogen.choice(valores)
+        longitud = longitud - 1
+
+    cur.execute('INSERT OR REPLACE INTO names (serv, psd) VALUES (?, ?)' , (ord , pss))
+    cur.execute('INSERT OR IGNORE INTO pass (date, psd, serv) VALUES (?, ?, ?)' , (d , pss , ord ,))
+
+    conn.commit()
+
+    print(pss)
+
+
 d = datetime.datetime.today()
 print(d)
 
@@ -18,24 +38,3 @@ cur.execute('''CREATE TABLE IF NOT EXISTS pass
     (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, date TEXT, psd TEXT, serv TEXT)''')
 
 ord = input('Programa: ')
-
-
-#Creacion de password
-
-longitud = 18
-
-valores =  string.ascii_letters+string.digits + ord
-cryptogen = SystemRandom()
-pss = ""
-
-while longitud > 0:
-    pss = pss + cryptogen.choice(valores)
-    longitud = longitud - 1
-
-
-cur.execute('INSERT OR REPLACE INTO names (serv, psd) VALUES (?, ?)', (ord, pss))
-cur.execute('INSERT OR IGNORE INTO pass (date, psd, serv) VALUES (?, ?, ?)', (d, pss, ord,))
-
-conn.commit()
-
-print(pss)
