@@ -73,13 +73,15 @@ def opciones():
           ' A Para Generar -'
           ' B Para Buscar')
     opcion = input('Elige la opción: ')
+    opcion = opcion.lower()
     if len(opcion) < 1:
         print('Esa Opcion No es Correcta, Escribe Algo')
-        return
+        opciones()
     if opcion == 'a':
         gen()
         return
-    else:
+    if opcion == 'b':
         lectura()
+    else:
         return
 opciones()
