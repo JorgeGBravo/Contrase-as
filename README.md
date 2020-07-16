@@ -1,2 +1,2 @@
 ﻿# Contrase-as
-I´ts a generation of passwords a extractas olnly new and old password. 
+Genera y Recuerda contraseñas para uso personal.
