@@ -83,5 +83,7 @@ def opciones():
     if opcion == 'b':
         lectura()
     else:
-        return
+        print('Esa Opcion No Existe')
+        opciones()
+
 opciones()
