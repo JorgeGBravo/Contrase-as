@@ -1,6 +1,5 @@
-import sqlite3
-import time
 import datetime
+import sqlite3
 
 d = datetime.datetime.today()
 
@@ -10,7 +9,7 @@ cur = conn.cursor()
 busqueda = input("Escribe tu búsqueda: ")
 
 if not busqueda:
-    print("Búsqueda inválida")
+    print("Búsqueda Inválida")
     exit()
 
 sentencia = "SELECT * FROM names WHERE serv LIKE ?;"
@@ -19,7 +18,7 @@ row = cur.fetchone()
 ultima = row
 
 if ultima == None:
-    print("No hay ninguna coincidencia")
+    print("No hay Ninguna Coincidencia en la Base de Datos")
     exit()
 
 print('                                        PLATAFORMA                    PASSWORD')
@@ -43,3 +42,4 @@ if len(psd2) > 1:
     print('Penultima contraseña: ' , penultima)
 
 else: print('                      Solo hay un Password en uso editada')
+
