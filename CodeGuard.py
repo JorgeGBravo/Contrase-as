@@ -18,7 +18,6 @@ def gen():
     ord = input('Programa: ')
     if len(ord) == 0:
         print('Introduce una plataforma')
-        opciones()
     encript = 18
     valores = string.ascii_letters + string.digits + ord
     cryptogen = SystemRandom()
@@ -33,20 +32,19 @@ def gen():
     cur.execute('INSERT OR IGNORE INTO pass (date, psd, serv) VALUES (?, ?, ?)' , (d , pss64 , ord ,))
     conn.commit()
     print(pss)
-    opciones()
 
 def lectura():
     decript = 18
     busqueda = input("Escribe tu búsqueda: ")
     if not busqueda:
         print("Búsqueda Inválida")
-        opciones()
     sentencia = "SELECT * FROM names WHERE serv LIKE ?;"
     cur.execute(sentencia , ["{}".format(busqueda)])  #'.*pattern.*'
     row = cur.fetchone()
     if row == None:
         print("No hay Ninguna Coincidencia en la Base de Datos")
         lectura()
+        return
     ultimabytes = row[2]
     for i in range(1 , decript + 1):
         ultima = base64.b64decode(ultimabytes)
@@ -72,10 +70,8 @@ def lectura():
             penultima = penultima.decode()
 
             print('Penultima contraseña:        ', penultima64[1], '        ', penultima)
-            opciones()
     else:
         print('                      Solo hay un Password Editado')
-        opciones()
 
 def opciones():
     print('')
@@ -85,18 +81,14 @@ def opciones():
           ' Q Para Salir')
     opcion = input('Elige la opción: ')
     opcion = opcion.lower()
-    if len(opcion) < 1:
-        print('Esa Opcion No es Correcta, Escribe Algo')
-        opciones()
-    if opcion == 'a':
-        gen()
-    if opcion == 'b':
-        lectura()
-    if opcion == 'q':
-        print('Hasta Otra')
-        exit()
-    else:
-        print('Esa Opcion No Existe')
-        opciones()
+    while opcion != 'a' or 'b':
+        if opcion == 'a':
+            gen()
+        if opcion == 'b':
+            lectura()
+        elif opcion == 'q':
+            exit()
+        opcion = opciones()
+
 
 opciones()
