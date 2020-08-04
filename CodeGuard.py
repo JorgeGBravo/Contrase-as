@@ -1,11 +1,25 @@
 import base64
 import datetime
+import os.path
 import sqlite3
 import string
 from random import SystemRandom
 
 d = datetime.datetime.today()
 print(d)
+
+def nombre_tabla():
+    # nombre tabla servidor - conversor hash servidor
+    surname = input('Surname: ')
+    date = str(datetime.datetime.today())
+    aencript = date + surname
+    print(aencript)
+
+    if os.path.exists("nombre_tabla.txt"):
+        texto = open('nombre_tabla.txt' , 'w')
+        texto.write(aencript)
+    else:
+        exit()
 
 conn = sqlite3.connect('pass.sqlite')
 cur = conn.cursor()
@@ -72,6 +86,14 @@ def lectura():
             print('Penultima contraseña:        ', penultima64[1], '        ', penultima)
     else:
         print('                      Solo hay un Password Editado')
+
+def bdname():
+   # machine = str(platform.architecture())
+    surname = input('Surname: ')
+    date = str(datetime.datetime.today())
+    aencript = date + surname
+    print(aencript)
+
 
 def opciones():
     print('')
