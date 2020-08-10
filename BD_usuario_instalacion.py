@@ -7,16 +7,18 @@ import sqlite3
 def correo():
     email = input('Introducir Email: ')
     emailregx = re.compile(r'''(
-        [a-zA-Z0-9._%+-]+
-        @
-        [a-zA-Z0-9._]+
-        (\.[a-zA-Z0-9]{2-6})
-        )''' , re.VERBOSE)
-    if emailregx == None:
+                [a-zA-Z0-9._%+-]+
+                @
+                [a-zA-Z0-9._]+
+                (\.[a-zA-Z0-9]{2-6})
+                )''' , re.VERBOSE)
+    correo = emailregx.search(email)
+    print(correo)
+    if correo == None:
         print('No Valido')
         return correo()
     else:
-        print('Ok...', email)
+        print('Ok...' , email)
         return email
 
 
