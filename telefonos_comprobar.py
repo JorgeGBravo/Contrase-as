@@ -1,15 +1,17 @@
-movil = input('movil: ')
-
-def phonenumber():
-    if len(movil) != 9:
-        return print('Numero no Valido cantidad')
-    if movil == float:
-        return print('Numero no Valido letra')
-    for i in movil:
-        if not movil[1].isdecimal():
-            return print('No valido')
+import re
+def phonemovil():
+    movilin = input('Movil')
+    movilregx = re.compile(r'\d\d\d\d\d\d\d\d\d')
+    if len(movilin) != 9:
+        print('No Valido')
+        return phonemovil()
+    movil = movilregx.search(movilin)
+    if movil == None:
+        print('No Valido')
+        return phonemovil()
     else:
-        print('Perfecto')
+        print('OK:' +movil.group())
+        return movil.group()
 
-
-phonenumber()
+movil = phonemovil()
+print(movil)
