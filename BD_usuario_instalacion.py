@@ -9,7 +9,6 @@ def correo():
     email.strip()
     emailregx = re.compile(r'[\w.-]+@[\w.-]+\.[\w+]' , re.VERBOSE)
     correo = emailregx.search(email)
-    print(correo)
     if correo == None:
         print('No Valido')
         return correo()
@@ -20,7 +19,7 @@ def correo():
 
 
 def phonemovil():
-    movilin = input('Movil')
+    movilin = input('Introducir Movil: ')
     movilin.strip()
     movilregx = re.compile(r'\d\d\d\d\d\d\d\d\d')
     if len(movilin) != 9:
