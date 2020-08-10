@@ -2,7 +2,6 @@ import json
 import re
 import socket
 import ssl
-import urllib.error
 import urllib.request
 
 # Ignore SSL certificate errors
@@ -46,3 +45,19 @@ except:
     js = None
 
 print(json.dumps(js, indent=4))
+
+ip = js['ip']
+pais = js['location']['country']
+region = js['location']['region']
+latitude = js['location']['lat']
+longitude = js['location']['lng']
+postalcode = js['location']['postalCode']
+route = js['as']['route']
+asn = js['as']['asn']
+isp = js['isp']
+domain = js['as']['domain']
+type = js['as']['type']
+name = js['as']['name']
+geonameId = js['location']['geonameId']
+
+print(ip)
