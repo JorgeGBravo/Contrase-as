@@ -6,12 +6,8 @@ import sqlite3
 
 def correo():
     email = input('Introducir Email: ')
-    emailregx = re.compile(r'''(
-                [a-zA-Z0-9._%+-]+
-                @
-                [a-zA-Z0-9._]+
-                (\.[a-zA-Z0-9]{2-6})
-                )''' , re.VERBOSE)
+    email.strip()
+    emailregx = re.compile(r'[\w.-]+@[\w.-]+\.[\w+]' , re.VERBOSE)
     correo = emailregx.search(email)
     print(correo)
     if correo == None:
@@ -25,6 +21,7 @@ def correo():
 
 def phonemovil():
     movilin = input('Movil')
+    movilin.strip()
     movilregx = re.compile(r'\d\d\d\d\d\d\d\d\d')
     if len(movilin) != 9:
         print('No Valido')
@@ -41,7 +38,9 @@ def phonemovil():
 
 
 name = input('Name: ')
+name.strip()
 surname = input('Surname: ')
+surname.strip()
 email = correo()
 movil = phonemovil()
 machine = str(platform.architecture())
