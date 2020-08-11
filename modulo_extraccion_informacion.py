@@ -25,7 +25,7 @@ def ipv4regx():
     ipv4 = iprex.search(data)
     #print('IPv4:   ', ipv4.group())
 
-def ipv6():
+def ipv6_():
     show2 = urllib.request.urlopen('https://api.ipify.org')
     data2 = show2.read().decode()
     print('IPv4:   ', data2)
