@@ -1,4 +1,5 @@
 import json
+import platform
 import re
 import socket
 import ssl
@@ -60,3 +61,8 @@ def apipify():
     geonameId = js['location']['geonameId']
 
     print(ipgeo)
+
+print(platform.machine())
+print(platform.system())
+print(platform.processor())
+print(platform.uname())
