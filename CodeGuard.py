@@ -5,11 +5,18 @@ import sqlite3
 import string
 from random import SystemRandom
 
-d = datetime.datetime.today()
-print(d)
+from BD_usuario_instalacion import date
+
+
+def bdname():
+   # machine = str(platform.architecture())
+    surname = input('Surname: ')
+    date = str(datetime.datetime.today())
+    aencript = date + surname
+    print(aencript)
 
 def nombre_tabla():
-    # nombre tabla servidor - conversor hash servidor
+    # nombre tabla en el servidor - conversor hash servidor
     surname = input('Surname: ')
     date = str(datetime.datetime.today())
     aencript = date + surname
@@ -21,14 +28,9 @@ def nombre_tabla():
     else:
         exit()
 
-conn = sqlite3.connect('pass.sqlite')
-cur = conn.cursor()
-cur.execute('''CREATE TABLE IF NOT EXISTS names
-    (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, serv TEXT UNIQUE, psd TEXT)''')
-cur.execute('''CREATE TABLE IF NOT EXISTS pass
-    (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, date TEXT, psd TEXT, serv TEXT)''')
-
-def gen():
+def gen(hashname):
+    conn = sqlite3.connect(hashname +'.sqlite')       #asignar nombre de tabla a lo asignado
+    cur = conn.cursor()
     ord = input('Programa: ')
     if len(ord) == 0:
         print('Introduce una plataforma')
@@ -41,13 +43,14 @@ def gen():
         pssbytes = bytes(pss, encoding ="utf-8")
         for i in range(1, encript + 1):
             pss64 = base64.b64encode(pssbytes)
-
     cur.execute('INSERT OR REPLACE INTO names (serv, psd) VALUES (?, ?)' , (ord , pss64))
-    cur.execute('INSERT OR IGNORE INTO pass (date, psd, serv) VALUES (?, ?, ?)' , (d , pss64 , ord ,))
+    cur.execute('INSERT OR IGNORE INTO pass (date, psd, serv) VALUES (?, ?, ?)' , (date , pss64 , ord ,))
     conn.commit()
     print(pss)
 
-def lectura():
+def lectura(namehash):
+    conn = sqlite3.connect(namehash +'.sqlite')           #igual a gen() nombre de tabla a asignar
+    cur = conn.cursor()
     decript = 18
     busqueda = input("Escribe tu búsqueda: ")
     if not busqueda:
@@ -84,16 +87,19 @@ def lectura():
             penultima = penultima.decode()
 
             print('Penultima contraseña:        ', penultima64[1], '        ', penultima)
+            return
     else:
         print('                      Solo hay un Password Editado')
 
-def bdname():
-   # machine = str(platform.architecture())
-    surname = input('Surname: ')
-    date = str(datetime.datetime.today())
-    aencript = date + surname
-    print(aencript)
 
+def tabla_create():
+    conn = sqlite3.connect('pass.sqlite')
+    cur = conn.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS names
+        (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, serv TEXT UNIQUE, psd TEXT)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS pass
+        (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, date TEXT, psd TEXT, serv TEXT)''')
+    conn.commit()
 
 def opciones():
     print('')
@@ -105,6 +111,7 @@ def opciones():
     opcion = opcion.lower()
     while opcion != 'a' or 'b':
         if opcion == 'a':
+            tabla_create()
             gen()
         if opcion == 'b':
             lectura()

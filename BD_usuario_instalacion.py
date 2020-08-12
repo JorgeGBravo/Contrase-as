@@ -1,7 +1,7 @@
 import datetime
 import platform
 import re
-import sqlite3
+
 
 def nombre():
     while True:
@@ -57,6 +57,8 @@ def phonemovil():
             return movil.group()
 
 
+
+
 name = nombre()
 surname = apellido()
 email = correo()
@@ -64,14 +66,3 @@ movil = phonemovil()
 machine = str(platform.architecture())
 date = str(datetime.datetime.today())
 datemail ='#esta información es enviada desde el terminal a traves de un correo para activar cuenta'
-
-def bdname(name, surname, email, movil, date, machine, datemail):
-    print(name, surname, email, movil, date, machine)
-    conn = sqlite3.connect('Identifier.sqlite')
-    cur = conn.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS datos_usuarios
-        (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TEXT, surname TEXT, email TEXT UNIQUE, movil INTERGER UNIQUE, date TIMESTAMP, machine TEXT, date-mail TIMESTAMP)''')
-    cur.execute('INSERT OR IGNORE INTO datos_usuarios (name, surname, email, movil, date, machine) VALUES (?, ?, ?, ?, ?, ?)', (name, surname, email, movil, date, machine))
-    conn.commit()
-
-bdname(name, surname, email, movil, date, machine)
